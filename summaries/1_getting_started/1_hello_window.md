@@ -1,7 +1,7 @@
 # Hello Window
 
-Chapter: [Hello Window](https://learnopengl.com/Getting-started/Hello-Window)
-Module: [_1_hello_window.rs](../../src/_1_getting_started/_1_hello_window.rs)
+- Chapter: [Hello Window](https://learnopengl.com/Getting-started/Hello-Window)
+- Module: [_1_hello_window.rs](../../src/_1_getting_started/_1_hello_window.rs)
 
 ## Summary
 
