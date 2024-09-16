@@ -1,5 +1,5 @@
 [package]
-name = "rust_learn_ogl"
+name = "rust_learn_opengl"
 version = "0.1.0"
 edition = "2021"
 
