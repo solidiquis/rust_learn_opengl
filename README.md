@@ -1,4 +1,4 @@
-# Learn OpenGL Rust
+# Learn OpenGL with Rust
 
 Going through [Learn OpenGL](https://learnopengl.com/) with Rust. This repo contains my progress working through examples and exercises
 from each chapter. A verbalized summary of my learnings containing concept and code explanations can be found in the [summaries](/summaries)
