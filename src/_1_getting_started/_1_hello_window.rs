@@ -18,7 +18,7 @@ pub fn run() -> Result<()> {
 
     glfw_obj.make_context_current(Some(&window));
 
-    gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
+    gl::load_with(|symbol| window.get_proc_address(symbol));
 
     window.set_key_polling(true);
     window.set_framebuffer_size_polling(true);
