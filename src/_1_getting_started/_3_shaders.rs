@@ -6,7 +6,7 @@ use glfw::{
 use std::path::PathBuf;
 
 use crate::glutils::{
-    model::{ModelBuilder, Usage, Vertices},
+    model::{usage::Usage, ModelBuilder, VertexAttribute},
     shader::{self, ShaderType},
 };
 
@@ -47,8 +47,8 @@ pub fn run() -> Result<()> {
     let model = ModelBuilder::<9, 0>::new(
         program,
         Usage::Static,
-        Vertices::new("aPos", TRIANGLE, 3, false),
-    )
+        VertexAttribute::new("aPos", TRIANGLE, 3, false),
+    )?
     .build()?;
 
     let our_color = program.get_uniform_loc("ourColor")?;

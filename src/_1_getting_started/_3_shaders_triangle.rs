@@ -1,5 +1,5 @@
 use crate::glutils::{
-    model::{ModelBuilder, Usage, Vertices},
+    model::{primitives::Primitive, usage::Usage, ModelBuilder, VertexAttribute},
     shader::{program, Shader, ShaderType},
 };
 use anyhow::{format_err, Result};
@@ -47,20 +47,18 @@ pub fn run() -> Result<()> {
     let model = ModelBuilder::<9, 9>::new(
         program,
         Usage::Static,
-        Vertices::new("aPos", TRIANGLE_POS, 3, false),
-    )
-    .color_vertices(Vertices::new("aCol", TRIANGLE_COL, 3, false))
+        VertexAttribute::new("aPos", TRIANGLE_POS, 3, false),
+    )?
+    .color_attributes(VertexAttribute::new("aCol", TRIANGLE_COL, 3, false))?
     .build()?;
 
-    program.use_program();
+    model.use_program();
     model.bind();
 
     while !window.should_close() {
         handle_events(&events_rx, &mut window);
         clear_color(0.2, 0.2, 0.2, 0.0);
-        unsafe {
-            gl::DrawArrays(gl::TRIANGLES, 0, 3);
-        }
+        model.draw_arrays(Primitive::Triangles);
         window.swap_buffers();
         glfw_obj.poll_events();
     }
