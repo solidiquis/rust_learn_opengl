@@ -44,12 +44,17 @@ pub fn run() -> Result<()> {
         .attach_shader(fs)
         .link()?;
 
-    let model = ModelBuilder::<9, 9>::new(
+    let mut model = ModelBuilder::new(
         program,
         Usage::Static,
-        VertexAttribute::new("aPos", TRIANGLE_POS, 3, false),
+        VertexAttribute::new("aPos", TRIANGLE_POS.to_vec(), 3, false),
     )?
-    .color_attributes(VertexAttribute::new("aCol", TRIANGLE_COL, 3, false))?
+    .color_attributes(VertexAttribute::new(
+        "aCol",
+        TRIANGLE_COL.to_vec(),
+        3,
+        false,
+    ))?
     .build()?;
 
     model.use_program();
@@ -58,7 +63,7 @@ pub fn run() -> Result<()> {
     while !window.should_close() {
         handle_events(&events_rx, &mut window);
         clear_color(0.2, 0.2, 0.2, 0.0);
-        model.draw_arrays(Primitive::Triangles);
+        model.try_draw_arrays(Primitive::Triangles)?;
         window.swap_buffers();
         glfw_obj.poll_events();
     }

@@ -1,13 +1,11 @@
-use super::super::GLenum;
-
 pub enum Primitive {
     Triangles,
 }
 
-impl GLenum for Primitive {
-    fn into_glenum(self) -> gl::types::GLenum {
-        match self {
-            Self::Triangles => gl::TRIANGLES,
+impl From<Primitive> for gl::types::GLenum {
+    fn from(value: Primitive) -> Self {
+        match value {
+            Primitive::Triangles => gl::TRIANGLES,
         }
     }
 }

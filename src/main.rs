@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use anyhow::{format_err, Result};
 use std::process::ExitCode;
 

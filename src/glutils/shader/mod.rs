@@ -1,4 +1,4 @@
-use super::GLenum;
+use super::try_into;
 use anyhow::{format_err, Result};
 use std::{
     convert::AsRef,
@@ -10,18 +10,18 @@ use std::{
 
 pub mod program;
 
-pub struct Shader(u32);
+pub struct Shader(gl::types::GLuint);
 
 pub enum ShaderType {
     Vertex,
     Fragment,
 }
 
-impl GLenum for ShaderType {
-    fn into_glenum(self) -> gl::types::GLenum {
-        match self {
-            Self::Vertex => gl::VERTEX_SHADER,
-            Self::Fragment => gl::FRAGMENT_SHADER,
+impl From<ShaderType> for gl::types::GLenum {
+    fn from(shader_type: ShaderType) -> Self {
+        match shader_type {
+            ShaderType::Vertex => gl::VERTEX_SHADER,
+            ShaderType::Fragment => gl::FRAGMENT_SHADER,
         }
     }
 }
@@ -40,11 +40,10 @@ impl Shader {
     }
 
     fn compile_src(file_name: &str, src: &str, typ: ShaderType) -> Result<gl::types::GLuint> {
-        let shader_type = typ.into_glenum();
         let shader_src = CString::new(src)?;
 
         unsafe {
-            let shader = gl::CreateShader(shader_type);
+            let shader = gl::CreateShader(typ.into());
             gl::ShaderSource(shader, 1, &shader_src.as_ptr(), ptr::null());
             gl::CompileShader(shader);
 
@@ -55,7 +54,7 @@ impl Shader {
                 let mut log: [u8; 512] = [0; 512];
                 gl::GetShaderInfoLog(
                     shader,
-                    (mem::size_of::<u8>() * log.len()).try_into().unwrap(),
+                    try_into!(mem::size_of::<u8>() * log.len()),
                     ptr::null_mut(),
                     log.as_mut_ptr() as *mut i8,
                 );

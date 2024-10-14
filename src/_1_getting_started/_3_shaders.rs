@@ -44,10 +44,10 @@ pub fn run() -> Result<()> {
         .attach_shader(fragment_shader)
         .link()?;
 
-    let model = ModelBuilder::<9, 0>::new(
+    let mut model = ModelBuilder::new(
         program,
         Usage::Static,
-        VertexAttribute::new("aPos", TRIANGLE, 3, false),
+        VertexAttribute::new("aPos", TRIANGLE.to_vec(), 3, false),
     )?
     .build()?;
 

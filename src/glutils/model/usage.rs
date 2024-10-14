@@ -1,5 +1,3 @@
-use super::super::GLenum;
-
 #[derive(Default, Copy, Clone)]
 pub enum Usage {
     #[default]
@@ -8,12 +6,12 @@ pub enum Usage {
     Dynamic,
 }
 
-impl GLenum for Usage {
-    fn into_glenum(self) -> gl::types::GLenum {
-        match self {
-            Self::Stream => gl::STREAM_DRAW,
-            Self::Static => gl::STATIC_DRAW,
-            Self::Dynamic => gl::DYNAMIC_DRAW,
+impl From<Usage> for gl::types::GLenum {
+    fn from(value: Usage) -> gl::types::GLenum {
+        match value {
+            Usage::Stream => gl::STREAM_DRAW,
+            Usage::Static => gl::STATIC_DRAW,
+            Usage::Dynamic => gl::DYNAMIC_DRAW,
         }
     }
 }
